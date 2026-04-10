@@ -1,11 +1,13 @@
 package com.petshop.service;
 
+import com.petshop.dto.PetDTO;
 import com.petshop.entity.Pet;
 import com.petshop.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PetService {
@@ -17,8 +19,11 @@ public class PetService {
         return petRepo.save(pet);
     }
 
-    public List<Pet> getAllPets() {
-        return petRepo.findAll();
+    public List<PetDTO> getAllPets() {
+        return petRepo.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public Pet getPetById(int id) {
@@ -31,5 +36,15 @@ public class PetService {
 
     public void deletePet(int id) {
         petRepo.deleteById(id);
+    }
+
+    public PetDTO convertToDTO(Pet pet) {
+        return new PetDTO(
+                pet.getPetId(),
+                pet.getName(),
+                pet.getBreed(),
+                pet.getAge(),
+                pet.getPrice()
+        );
     }
 }
