@@ -1,5 +1,6 @@
 package com.petshop.controller;
 
+import com.petshop.dto.PetDTO;
 import com.petshop.entity.Pet;
 import com.petshop.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class PetController {
     }
 
     @GetMapping
-    public List<Pet> getAllPets() {
+    public List<PetDTO> getAllPets() {
         return petService.getAllPets();
     }
 
