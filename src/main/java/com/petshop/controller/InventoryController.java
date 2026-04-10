@@ -1,4 +1,4 @@
-package com.petshop;
+package com.petshop.controller;
 
 import com.petshop.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
