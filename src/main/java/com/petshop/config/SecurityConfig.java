@@ -11,18 +11,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/customers/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/customers/**").authenticated()  // secured
+                        .anyRequest().permitAll()                         // others open
                 )
                 .httpBasic(withDefaults());
-                        .anyRequest().permitAll()
-                );
 
         return http.build();
     }

@@ -7,12 +7,11 @@ import com.petshop.entity.Vaccination;
 import com.petshop.exception.ResourceNotFoundException;
 import com.petshop.repository.GroomingServiceRepository;
 import com.petshop.repository.PetRepository;
-
-
 import com.petshop.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,14 +35,18 @@ public class ServiceManager {
         return vaccinationRepo.save(v);
     }
 
-    // ASSIGN SERVICES TO PET
-
+    // ASSIGN
     public String assignGrooming(int petId, int serviceId) {
+
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
         GroomingService g = groomingRepo.findById(serviceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Grooming service not found"));
+
+        if (pet.getGroomingServices() == null) {
+            pet.setGroomingServices(new ArrayList<>());
+        }
 
         pet.getGroomingServices().add(g);
         petRepo.save(pet);
@@ -51,13 +54,17 @@ public class ServiceManager {
         return "Grooming assigned";
     }
 
-
     public String assignVaccination(int petId, int vaccinationId) {
+
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
         Vaccination v = vaccinationRepo.findById(vaccinationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
+
+        if (pet.getVaccinations() == null) {
+            pet.setVaccinations(new ArrayList<>());
+        }
 
         pet.getVaccinations().add(v);
         petRepo.save(pet);
@@ -65,14 +72,16 @@ public class ServiceManager {
         return "Vaccination assigned";
     }
 
+    // DTO
     public ServiceDTO convertGroomingToDTO(GroomingService g) {
-        return new ServiceDTO(g.getId(), g.getServiceName());
+        return new ServiceDTO(g.getId(), g.getName());
     }
 
     public ServiceDTO convertVaccinationToDTO(Vaccination v) {
-        return new ServiceDTO(v.getId(), v.getVaccineName());
+        return new ServiceDTO(v.getId(), v.getName());
     }
 
+    // GET ALL
     public List<ServiceDTO> getAllGrooming() {
         return groomingRepo.findAll()
                 .stream()

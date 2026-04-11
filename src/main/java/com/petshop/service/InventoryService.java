@@ -4,6 +4,8 @@ package com.petshop.service;
 import com.petshop.dto.EmployeeDTO;
 import com.petshop.entity.Employee;
 import com.petshop.entity.Pet;
+import com.petshop.entity.PetFood;
+import com.petshop.entity.Supplier;
 import com.petshop.repository.EmployeeRepository;
 import com.petshop.repository.PetFoodRepository;
 import com.petshop.repository.PetRepository;

@@ -10,10 +10,6 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-@ControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNotFound(ResourceNotFoundException ex) {
         Map<String, String> error = new HashMap<>();

@@ -1,6 +1,7 @@
 package com.petshop.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "pets")
@@ -8,6 +9,7 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pet_id")
     private int petId;
 
     private String name;
@@ -15,13 +17,61 @@ public class Pet {
     private int age;
     private double price;
     private String description;
+
+    @Column(name = "image_url")
     private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private PetCategory category;
 
-    // Getters & Setters
+    // ✅ Grooming
+    @ManyToMany
+    @JoinTable(
+            name = "pet_grooming_relationship",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private List<GroomingService> groomingServices;
+
+    // ✅ Vaccination
+    @ManyToMany
+    @JoinTable(
+            name = "pet_vaccination_relationship",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "vaccination_id")
+    )
+    private List<Vaccination> vaccinations;
+
+    // ✅ Employee
+    @ManyToMany
+    @JoinTable(
+            name = "employee_pet_relationship",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
+    private List<Employee> employees;
+
+    // ✅ Food
+    @ManyToMany
+    @JoinTable(
+            name = "pet_food_relationship",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "food_id")
+    )
+    private List<PetFood> foods;
+
+    // ✅ Supplier
+    @ManyToMany
+    @JoinTable(
+            name = "pet_supplier_relationship",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "supplier_id")
+    )
+    private List<Supplier> suppliers;
+
+    // ===== Getters & Setters =====
+
     public int getPetId() { return petId; }
     public void setPetId(int petId) { this.petId = petId; }
 
@@ -45,4 +95,19 @@ public class Pet {
 
     public PetCategory getCategory() { return category; }
     public void setCategory(PetCategory category) { this.category = category; }
+
+    public List<GroomingService> getGroomingServices() { return groomingServices; }
+    public void setGroomingServices(List<GroomingService> groomingServices) { this.groomingServices = groomingServices; }
+
+    public List<Vaccination> getVaccinations() { return vaccinations; }
+    public void setVaccinations(List<Vaccination> vaccinations) { this.vaccinations = vaccinations; }
+
+    public List<Employee> getEmployees() { return employees; }
+    public void setEmployees(List<Employee> employees) { this.employees = employees; }
+
+    public List<PetFood> getFoods() { return foods; }
+    public void setFoods(List<PetFood> foods) { this.foods = foods; }
+
+    public List<Supplier> getSuppliers() { return suppliers; }
+    public void setSuppliers(List<Supplier> suppliers) { this.suppliers = suppliers; }
 }
