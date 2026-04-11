@@ -33,6 +33,7 @@ public class ServiceController {
         return serviceManager.assignGrooming(petId, serviceId);
     }
 
+    // minor update
     @PostMapping("/assign/vaccination")
     public String assignVaccination(@RequestParam int petId, @RequestParam int vaccinationId) {
         return serviceManager.assignVaccination(petId, vaccinationId);
