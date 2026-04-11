@@ -1,11 +1,13 @@
-<<<<<<< HEAD
 # Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
-# IntelliJ
+# IntelliJ / IDEs
 .idea/
 *.iml
+*.iws
+*.ipr
+.vscode/
 
 # Logs
 *.log
@@ -20,14 +22,16 @@ Thumbs.db
 # Spring Boot
 *.jar
 *.war
-=======
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -36,22 +40,5 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
->>>>>>> 57b1d65 (Initial project structure)
+# IMPORTANT (your addition)
+application-local.properties
