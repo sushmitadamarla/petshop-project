@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
-
     @Autowired private PetRepository petRepo;
     @Autowired private EmployeeRepository employeeRepo;
     @Autowired private PetFoodRepository foodRepo;
