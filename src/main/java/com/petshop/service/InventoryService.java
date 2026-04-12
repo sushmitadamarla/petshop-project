@@ -13,6 +13,8 @@ import com.petshop.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class InventoryService {
 
@@ -29,6 +31,14 @@ public class InventoryService {
 
         if (pet == null || emp == null) return "Not found";
 
+        if (pet.getEmployees() == null) {
+            pet.setEmployees(new ArrayList<>());
+        }
+
+        if (pet.getEmployees().contains(emp)) {
+            return "Employee already assigned";
+        }
+
         pet.getEmployees().add(emp);
         petRepo.save(pet);
 
@@ -41,6 +51,10 @@ public class InventoryService {
 
         if (pet == null || food == null) return "Not found";
 
+        if (pet.getFoods() == null) {
+            pet.setFoods(new ArrayList<>());
+        }
+
         pet.getFoods().add(food);
         petRepo.save(pet);
 
@@ -52,6 +66,10 @@ public class InventoryService {
         Supplier sup = supplierRepo.findById(supplierId).orElse(null);
 
         if (pet == null || sup == null) return "Not found";
+
+        if (pet.getSuppliers() == null) {
+            pet.setSuppliers(new ArrayList<>());
+        }
 
         pet.getSuppliers().add(sup);
         petRepo.save(pet);
