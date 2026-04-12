@@ -1,6 +1,5 @@
 package com.petshop.service;
 
-
 import com.petshop.dto.EmployeeDTO;
 import com.petshop.entity.Employee;
 import com.petshop.entity.Pet;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
-
     @Autowired private PetRepository petRepo;
     @Autowired private EmployeeRepository employeeRepo;
     @Autowired private PetFoodRepository foodRepo;
