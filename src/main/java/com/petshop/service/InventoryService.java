@@ -47,7 +47,7 @@ public class InventoryService {
         Pet pet = petRepo.findById(petId).orElse(null);
         Supplier sup = supplierRepo.findById(supplierId).orElse(null);
 
-        if (pet == null || sup == null) return "Not found";
+        if (pet == null || sup == null) return "Data Not found";
 
         pet.getSuppliers().add(sup);
         petRepo.save(pet);
