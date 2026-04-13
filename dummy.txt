@@ -12,3 +12,4 @@ Fix bug in checkout flow
 Refactor order controller
 Update README with setup steps
 Create Transaction entity and repository
+Implement TransactionDTO with validation
