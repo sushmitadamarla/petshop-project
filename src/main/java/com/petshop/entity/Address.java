@@ -23,9 +23,6 @@ public class Address {
     @Column(name = "zip_code")
     private String pincode;
 
-    // getters & setters
-
-
     public int getId() {
         return id;
     }
