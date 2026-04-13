@@ -18,3 +18,4 @@ Integrate transaction module with payment gateway
 Fix bug in transaction rollback logic
 Refactor transaction controller for clarity
 Add unit tests for transaction service
+Update database schema with transaction table
