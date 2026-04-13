@@ -1,0 +1,55 @@
+[33m616230d[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/pet-module[m[33m)[m HEAD@{0}: pull origin pet-module --rebase (start): checkout 616230d4364d8a57039cf01ec7d76c37f0b873f1
+[33mf79bd17[m[33m ([m[1;32mpet-module[m[33m)[m HEAD@{1}: commit: Completed Pet Module with REST APIs and Category support
+[33md224bb9[m HEAD@{2}: checkout: moving from main to pet-module
+[33m75cc67e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{3}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m75cc67e[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{4}: pull origin main --rebase (pick): Completed petshop backend APIs with fixes
+[33mbff1e2c[m HEAD@{5}: pull origin main --rebase (start): checkout bff1e2ca3da20233918e296940f2f5af10bf5384
+[33md4c3c00[m HEAD@{6}: commit: Completed petshop backend APIs with fixes
+[33m8358bdf[m HEAD@{7}: commit: Completed petshop backend APIs with fixes
+[33mf5aad58[m HEAD@{8}: pull origin main: Fast-forward
+[33mcc9d047[m HEAD@{9}: checkout: moving from pet-module to main
+[33md224bb9[m HEAD@{10}: checkout: moving from inventory-module to pet-module
+[33m50ed9e2[m[33m ([m[1;31morigin/inventory-module[m[33m, [m[1;32minventory-module[m[33m)[m HEAD@{11}: commit: modified inventory module
+[33m112a146[m HEAD@{12}: checkout: moving from pet-module to inventory-module
+[33md224bb9[m HEAD@{13}: commit: modified pet module
+[33m6e08fd1[m HEAD@{14}: checkout: moving from transaction-module to pet-module
+[33me79ae8c[m[33m ([m[1;31morigin/transaction-module[m[33m, [m[1;32mtransaction-module[m[33m)[m HEAD@{15}: commit: added transaction module
+[33m420c793[m HEAD@{16}: commit: test commit
+[33mcc9d047[m HEAD@{17}: checkout: moving from customer-module to transaction-module
+[33m56a70dd[m[33m ([m[1;31morigin/customer-module[m[33m, [m[1;32mcustomer-module[m[33m)[m HEAD@{18}: pull origin customer-module: Merge made by the 'ort' strategy.
+[33m1632389[m HEAD@{19}: commit: Implemented Customer module with correct JPA mapping and DTO structure
+[33m01c1fc7[m HEAD@{20}: commit: Test commit
+[33mcc9d047[m HEAD@{21}: checkout: moving from service-module to customer-module
+[33m2bd1478[m[33m ([m[1;31morigin/service-module[m[33m, [m[1;32mservice-module[m[33m)[m HEAD@{22}: commit: minor update
+[33md6f33a7[m HEAD@{23}: checkout: moving from service-module to service-module
+[33md6f33a7[m HEAD@{24}: commit (amend): Added service module
+[33m28c523a[m HEAD@{25}: commit: Added service module
+[33mcc9d047[m HEAD@{26}: checkout: moving from service-module to service-module
+[33mcc9d047[m HEAD@{27}: checkout: moving from pet-module to service-module
+[33m6e08fd1[m HEAD@{28}: commit: changed application.properties
+[33mcc8d114[m HEAD@{29}: checkout: moving from inventory-module to pet-module
+[33m112a146[m HEAD@{30}: checkout: moving from pet-module to inventory-module
+[33mcc8d114[m HEAD@{31}: commit: Completed pet module with DTO and exception handling
+[33m7e02e65[m HEAD@{32}: checkout: moving from inventory-module to pet-module
+[33m112a146[m HEAD@{33}: commit: Restored correct controller name in proper package
+[33m3f4e4ef[m HEAD@{34}: commit: Temp rename to fix git tracking
+[33m4bf3ae7[m HEAD@{35}: commit: Fixed controller package structure
+[33m6f0df1c[m HEAD@{36}: commit: Completed Inventory Module
+[33mcc9d047[m HEAD@{37}: checkout: moving from pet-module to inventory-module
+[33m7e02e65[m HEAD@{38}: commit: Completed pet module
+[33mcc9d047[m HEAD@{39}: checkout: moving from inventory-module to pet-module
+[33mcc9d047[m HEAD@{40}: checkout: moving from main to inventory-module
+[33mcc9d047[m HEAD@{41}: checkout: moving from transaction-module to main
+[33mcc9d047[m HEAD@{42}: checkout: moving from main to transaction-module
+[33mcc9d047[m HEAD@{43}: checkout: moving from service-module to main
+[33mcc9d047[m HEAD@{44}: checkout: moving from main to service-module
+[33mcc9d047[m HEAD@{45}: checkout: moving from customer-module to main
+[33mcc9d047[m HEAD@{46}: checkout: moving from main to customer-module
+[33mcc9d047[m HEAD@{47}: checkout: moving from pet-module to main
+[33mcc9d047[m HEAD@{48}: checkout: moving from main to pet-module
+[33mcc9d047[m HEAD@{49}: rebase (finish): returning to refs/heads/main
+[33mcc9d047[m HEAD@{50}: commit: Updated gitignore
+[33md1e0f59[m HEAD@{51}: pull origin main --rebase (start): checkout d1e0f59c5e544ce1df4fedb16614d7ecdb4adecd
+[33m1b625f9[m HEAD@{52}: commit (merge): Resolved gitignore conflict and added project structure
+[33m57b1d65[m HEAD@{53}: Branch: renamed refs/heads/master to refs/heads/main
+[33m57b1d65[m HEAD@{55}: commit (initial): Initial project structure

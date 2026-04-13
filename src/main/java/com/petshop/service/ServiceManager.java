@@ -12,6 +12,7 @@ import com.petshop.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,6 +65,10 @@ public class ServiceManager {
         GroomingService g = groomingRepo.findById(serviceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Grooming service not found"));
 
+        if (pet.getGroomingServices() == null) {
+            pet.setGroomingServices(new ArrayList<>());
+        }
+
         pet.getGroomingServices().add(g);
         petRepo.save(pet);
 
@@ -77,6 +82,10 @@ public class ServiceManager {
 
         Vaccination v = vaccinationRepo.findById(vaccinationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
+
+        if (pet.getVaccinations() == null) {
+            pet.setVaccinations(new ArrayList<>());
+        }
 
         pet.getVaccinations().add(v);
         petRepo.save(pet);
