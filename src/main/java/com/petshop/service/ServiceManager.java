@@ -1,14 +1,13 @@
 package com.petshop.service;
 
-import com.petshop.dto.ServiceDTO;
+import com.petshop.dto.GroomingServiceDTO;
+import com.petshop.dto.VaccinationDTO;
 import com.petshop.entity.GroomingService;
 import com.petshop.entity.Pet;
 import com.petshop.entity.Vaccination;
 import com.petshop.exception.ResourceNotFoundException;
 import com.petshop.repository.GroomingServiceRepository;
 import com.petshop.repository.PetRepository;
-
-
 import com.petshop.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,18 +26,38 @@ public class ServiceManager {
     @Autowired
     private PetRepository petRepo;
 
-    // ADD SERVICES
-    public GroomingService addGrooming(GroomingService g) {
-        return groomingRepo.save(g);
+    // ================= ADD SERVICES =================
+
+    public GroomingServiceDTO addGrooming(GroomingServiceDTO dto) {
+
+        GroomingService g = new GroomingService();
+        g.setName(dto.getName());
+        g.setDescription(dto.getDescription());
+        g.setPrice(dto.getPrice());
+        g.setAvailable(dto.isAvailable());
+
+        GroomingService saved = groomingRepo.save(g);
+
+        return mapGrooming(saved);
     }
 
-    public Vaccination addVaccination(Vaccination v) {
-        return vaccinationRepo.save(v);
+    public VaccinationDTO addVaccination(VaccinationDTO dto) {
+
+        Vaccination v = new Vaccination();
+        v.setName(dto.getName());
+        v.setDescription(dto.getDescription());
+        v.setPrice(dto.getPrice());
+        v.setAvailable(dto.isAvailable());
+
+        Vaccination saved = vaccinationRepo.save(v);
+
+        return mapVaccination(saved);
     }
 
-    // ASSIGN SERVICES TO PET
+    // ================= ASSIGN SERVICES =================
 
     public String assignGrooming(int petId, int serviceId) {
+
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
@@ -51,8 +70,8 @@ public class ServiceManager {
         return "Grooming assigned";
     }
 
-
     public String assignVaccination(int petId, int vaccinationId) {
+
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
@@ -65,25 +84,63 @@ public class ServiceManager {
         return "Vaccination assigned";
     }
 
-    public ServiceDTO convertGroomingToDTO(GroomingService g) {
-        return new ServiceDTO(g.getId(), g.getServiceName());
+    // ================= DTO MAPPERS =================
+
+    private GroomingServiceDTO mapGrooming(GroomingService g) {
+        return new GroomingServiceDTO(
+                g.getId(),
+                g.getServiceName(),
+                g.getPrice()
+        );
     }
 
-    public ServiceDTO convertVaccinationToDTO(Vaccination v) {
-        return new ServiceDTO(v.getId(), v.getVaccineName());
+    private VaccinationDTO mapVaccination(Vaccination v) {
+        return new VaccinationDTO(
+                v.getId(),
+                v.getName(),
+                v.getDescription(),
+                v.getPrice(),
+                v.isAvailable()
+        );
     }
 
-    public List<ServiceDTO> getAllGrooming() {
+    // ================= GET ALL SERVICES =================
+
+    public List<GroomingServiceDTO> getAllGrooming() {
         return groomingRepo.findAll()
                 .stream()
-                .map(this::convertGroomingToDTO)
+                .map(this::mapGrooming)
                 .toList();
     }
 
-    public List<ServiceDTO> getAllVaccination() {
+    public List<VaccinationDTO> getAllVaccination() {
         return vaccinationRepo.findAll()
                 .stream()
-                .map(this::convertVaccinationToDTO)
+                .map(this::mapVaccination)
+                .toList();
+    }
+
+    // ================= PET HISTORY =================
+
+    public List<GroomingServiceDTO> getPetGroomingHistory(int petId) {
+
+        Pet pet = petRepo.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+        return pet.getGroomingServices()
+                .stream()
+                .map(this::mapGrooming)
+                .toList();
+    }
+
+    public List<VaccinationDTO> getPetVaccinationHistory(int petId) {
+
+        Pet pet = petRepo.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+        return pet.getVaccinations()
+                .stream()
+                .map(this::mapVaccination)
                 .toList();
     }
 }
