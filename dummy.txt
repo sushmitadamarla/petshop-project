@@ -21,3 +21,4 @@ Add unit tests for transaction service
 Update database schema with transaction table
 Improve error handling in transaction API
 Document transaction workflow in README
+Update Transaction entity with additional fields and mappings
