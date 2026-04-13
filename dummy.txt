@@ -29,3 +29,4 @@ Integrate payment gateway with transaction workflow
 Optimize transaction processing logic
 Improve exception handling in TransactionController
 Add logging for transaction operations
+Update database schema for transaction table changes
