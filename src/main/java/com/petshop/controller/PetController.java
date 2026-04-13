@@ -1,6 +1,7 @@
 package com.petshop.controller;
 
 import com.petshop.dto.PetDTO;
+import com.petshop.dto.PetDetailsDTO;
 import com.petshop.entity.Pet;
 import com.petshop.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/pets")
+@RequestMapping("/pets")
 public class PetController {
 
     @Autowired
@@ -30,7 +31,7 @@ public class PetController {
         return petService.getPetById(id);
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     public List<Pet> getPetsByCategory(@PathVariable int categoryId) {
         return petService.getPetsByCategory(categoryId);
     }
@@ -41,7 +42,7 @@ public class PetController {
     }
 
     @GetMapping("/{id}/details")
-    public Pet getPetDetails(@PathVariable int id) {
-        return petService.getPetById(id);
+    public PetDetailsDTO getPetDetails(@PathVariable int id) {
+        return petService.getPetDetails(id);
     }
 }
