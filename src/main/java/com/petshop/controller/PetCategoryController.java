@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("api/categories")
 public class PetCategoryController {
 
     @Autowired
@@ -29,9 +29,8 @@ public class PetCategoryController {
         return categoryService.getCategoryById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteCategory(@PathVariable int id) {
-        categoryService.deleteCategory(id);
-        return "Category deleted!";
+    @PutMapping("/{id}")
+    public PetCategory updateCategory(@PathVariable int id, @RequestBody PetCategory category) {
+        return categoryService.updateCategory(id, category);
     }
 }

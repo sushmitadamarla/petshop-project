@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("api/pets")
 public class PetController {
 
     @Autowired
@@ -35,9 +35,13 @@ public class PetController {
         return petService.getPetsByCategory(categoryId);
     }
 
-    @DeleteMapping("/{id}")
-    public String deletePet(@PathVariable int id) {
-        petService.deletePet(id);
-        return "Pet deleted!";
+    @PutMapping("/{id}")
+    public Pet updatePet(@PathVariable int id, @RequestBody Pet pet) {
+        return petService.updatePet(id, pet);
+    }
+
+    @GetMapping("/{id}/details")
+    public Pet getPetDetails(@PathVariable int id) {
+        return petService.getPetById(id);
     }
 }

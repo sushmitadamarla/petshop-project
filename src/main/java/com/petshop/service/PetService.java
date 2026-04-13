@@ -27,9 +27,9 @@ public class PetService {
     }
 
     public Pet getPetById(int id) {
-        return petRepo.findById(id).orElse(null);
+        return petRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pet not found"));
     }
-
     public List<Pet> getPetsByCategory(int categoryId) {
         return petRepo.findByCategory_CategoryId(categoryId);
     }
@@ -46,5 +46,20 @@ public class PetService {
                 pet.getAge(),
                 pet.getPrice()
         );
+    }
+
+    public Pet updatePet(int id, Pet updatedPet) {
+        Pet existing = petRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pet not found"));
+
+        existing.setName(updatedPet.getName());
+        existing.setBreed(updatedPet.getBreed());
+        existing.setAge(updatedPet.getAge());
+        existing.setPrice(updatedPet.getPrice());
+        existing.setDescription(updatedPet.getDescription());
+        existing.setImageUrl(updatedPet.getImageUrl());
+        existing.setCategory(updatedPet.getCategory());
+
+        return petRepo.save(existing);
     }
 }
