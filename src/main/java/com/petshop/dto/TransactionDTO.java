@@ -11,6 +11,11 @@ public class TransactionDTO {
     private double amount;
     private String status;
 
+     // Default constructor
+    public TransactionDTO() {
+    	
+    }
+
     public TransactionDTO(int id, int customerId, int petId,
                           LocalDate transactionDate, double amount, String status) {
         this.id = id;

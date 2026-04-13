@@ -33,7 +33,7 @@ public class Transaction {
         Failed
     }
 
-    // getters & setters
+    // Getters & Setter
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
