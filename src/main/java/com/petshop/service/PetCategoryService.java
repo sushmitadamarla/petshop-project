@@ -22,10 +22,17 @@ public class PetCategoryService {
     }
 
     public PetCategory getCategoryById(int id) {
-        return categoryRepo.findById(id).orElse(null);
+        return categoryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
-    public void deleteCategory(int id) {
-        categoryRepo.deleteById(id);
+    public PetCategory updateCategory(int id, PetCategory updatedCategory) {
+
+        PetCategory existing = categoryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        existing.setName(updatedCategory.getName());
+
+        return categoryRepo.save(existing);
     }
 }

@@ -1,6 +1,7 @@
 package com.petshop.controller;
 
 import com.petshop.dto.PetDTO;
+import com.petshop.dto.PetDetailsDTO;
 import com.petshop.entity.Pet;
 import com.petshop.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,18 @@ public class PetController {
         return petService.getPetById(id);
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/categories/{categoryId}")
     public List<Pet> getPetsByCategory(@PathVariable int categoryId) {
         return petService.getPetsByCategory(categoryId);
     }
 
-    @DeleteMapping("/{id}")
-    public String deletePet(@PathVariable int id) {
-        petService.deletePet(id);
-        return "Pet deleted!";
+    @PutMapping("/{id}")
+    public Pet updatePet(@PathVariable int id, @RequestBody Pet pet) {
+        return petService.updatePet(id, pet);
+    }
+
+    @GetMapping("/{id}/details")
+    public PetDetailsDTO getPetDetails(@PathVariable int id) {
+        return petService.getPetDetails(id);
     }
 }
