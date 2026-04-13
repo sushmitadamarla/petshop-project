@@ -35,6 +35,14 @@ public class InventoryService {
         Employee emp = employeeRepo.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
+        if (pet.getEmployees() == null) {
+            pet.setEmployees(new ArrayList<>());
+        }
+
+        if (pet.getEmployees().contains(emp)) {
+            return "Employee already assigned";
+        }
+
         pet.getEmployees().add(emp);
         petRepo.save(pet);
 
@@ -49,6 +57,10 @@ public class InventoryService {
         PetFood food = foodRepo.findById(foodId)
                 .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
 
+        if (pet.getFoods() == null) {
+            pet.setFoods(new ArrayList<>());
+        }
+
         pet.getFoods().add(food);
         petRepo.save(pet);
 
@@ -62,6 +74,10 @@ public class InventoryService {
 
         Supplier sup = supplierRepo.findById(supplierId)
                 .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+
+        if (pet.getSuppliers() == null) {
+            pet.setSuppliers(new ArrayList<>());
+        }
 
         pet.getSuppliers().add(sup);
         petRepo.save(pet);
