@@ -21,3 +21,13 @@ Add unit tests for transaction service
 Update database schema with transaction table
 Improve error handling in transaction API
 Document transaction workflow in README
+Update Transaction entity with additional fields and mappings
+Enhance TransactionRepository with custom query methods
+Add validation annotations in TransactionDTO
+Refactor TransactionService for better modularity
+Integrate payment gateway with transaction workflow
+Optimize transaction processing logic
+Improve exception handling in TransactionController
+Add logging for transaction operations
+Update database schema for transaction table changes
+Update README with transaction module workflow
