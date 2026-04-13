@@ -20,3 +20,4 @@ Refactor transaction controller for clarity
 Add unit tests for transaction service
 Update database schema with transaction table
 Improve error handling in transaction API
+Document transaction workflow in README
