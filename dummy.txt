@@ -23,3 +23,4 @@ Improve error handling in transaction API
 Document transaction workflow in README
 Update Transaction entity with additional fields and mappings
 Enhance TransactionRepository with custom query methods
+Add validation annotations in TransactionDTO
