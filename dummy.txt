@@ -10,3 +10,4 @@ Add inventory service class
 Implement product stock update
 Fix bug in checkout flow
 Refactor order controller
+Update README with setup steps
