@@ -1,19 +1,9 @@
 package com.petshop.service;
 
-import com.petshop.dto.EmployeeDTO;
-import com.petshop.dto.PetFoodDTO;
-import com.petshop.dto.PetFoodRequestDTO;
-import com.petshop.dto.SupplierDTO;
-import com.petshop.dto.SupplierRequestDTO;
-import com.petshop.entity.Employee;
-import com.petshop.entity.Pet;
-import com.petshop.entity.PetFood;
-import com.petshop.entity.Supplier;
+import com.petshop.dto.*;
+import com.petshop.entity.*;
 import com.petshop.exception.ResourceNotFoundException;
-import com.petshop.repository.EmployeeRepository;
-import com.petshop.repository.PetFoodRepository;
-import com.petshop.repository.PetRepository;
-import com.petshop.repository.SupplierRepository;
+import com.petshop.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +55,12 @@ public class InventoryService {
         return foodRepo.findAll().stream().map(this::mapFood).toList();
     }
 
-    // FIX: accepts DTO instead of raw entity
+    public PetFoodDTO getFoodById(int id) {
+        PetFood food = foodRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+        return mapFood(food);
+    }
+
     public PetFoodDTO addFood(PetFoodRequestDTO dto) {
         PetFood food = new PetFood();
         food.setName(dto.getName());
@@ -76,7 +71,6 @@ public class InventoryService {
         return mapFood(foodRepo.save(food));
     }
 
-    // FIX: accepts DTO instead of raw entity
     public PetFoodDTO updateFood(int id, PetFoodRequestDTO dto) {
         PetFood food = foodRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
@@ -94,7 +88,12 @@ public class InventoryService {
         return supplierRepo.findAll().stream().map(this::mapSupplier).toList();
     }
 
-    // FIX: accepts DTO instead of raw entity
+    public SupplierDTO getSupplierById(int id) {
+        Supplier supplier = supplierRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+        return mapSupplier(supplier);
+    }
+
     public SupplierDTO addSupplier(SupplierRequestDTO dto) {
         Supplier supplier = new Supplier();
         supplier.setName(dto.getName());
@@ -104,18 +103,64 @@ public class InventoryService {
         return mapSupplier(supplierRepo.save(supplier));
     }
 
+    public SupplierDTO updateSupplier(int id, SupplierRequestDTO dto) {
+        Supplier supplier = supplierRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+        supplier.setName(dto.getName());
+        supplier.setContactPerson(dto.getContactPerson());
+        supplier.setPhoneNumber(dto.getPhoneNumber());
+        supplier.setEmail(dto.getEmail());
+        return mapSupplier(supplierRepo.save(supplier));
+    }
+
+    // ================= EMPLOYEE APIs =================
+
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeRepo.findAll().stream().map(this::mapEmployee).toList();
+    }
+
+    public EmployeeDTO getEmployeeById(int id) {
+        Employee emp = employeeRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+        return mapEmployee(emp);
+    }
+
+    public EmployeeDTO addEmployee(EmployeeRequestDTO dto) {
+        Employee emp = new Employee();
+        emp.setFirstName(dto.getFirstName());
+        emp.setLastName(dto.getLastName());
+        emp.setPosition(dto.getPosition());
+        // Add other fields from your Employee entity as needed
+        return mapEmployee(employeeRepo.save(emp));
+    }
+
+    public EmployeeDTO updateEmployee(int id, EmployeeRequestDTO dto) {
+        Employee emp = employeeRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+        emp.setFirstName(dto.getFirstName());
+        emp.setLastName(dto.getLastName());
+        emp.setPosition(dto.getPosition());
+        return mapEmployee(employeeRepo.save(emp));
+    }
+
+    // ================= RELATIONSHIP QUERIES =================
+
     public List<SupplierDTO> getSuppliersByPet(int petId) {
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
         return pet.getSuppliers().stream().map(this::mapSupplier).toList();
     }
 
-    // ================= PET FOOD BY PET =================
-
     public List<PetFoodDTO> getFoodByPet(int petId) {
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
         return pet.getFoods().stream().map(this::mapFood).toList();
+    }
+
+    public List<EmployeeDTO> getEmployeesByPet(int petId) {
+        Pet pet = petRepo.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+        return pet.getEmployees().stream().map(this::mapEmployee).toList();
     }
 
     // ================= MAPPERS =================

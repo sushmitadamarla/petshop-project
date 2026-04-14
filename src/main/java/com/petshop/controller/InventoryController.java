@@ -1,9 +1,6 @@
 package com.petshop.controller;
 
-import com.petshop.dto.PetFoodDTO;
-import com.petshop.dto.PetFoodRequestDTO;
-import com.petshop.dto.SupplierDTO;
-import com.petshop.dto.SupplierRequestDTO;
+import com.petshop.dto.*;
 import com.petshop.service.InventoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +41,11 @@ public class InventoryController {
         return service.getAllFood();
     }
 
+    @GetMapping("/food/{id}")
+    public ResponseEntity<PetFoodDTO> getFoodById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getFoodById(id));
+    }
+
     @PostMapping("/food")
     public ResponseEntity<PetFoodDTO> addFood(@Valid @RequestBody PetFoodRequestDTO dto) {
         return new ResponseEntity<>(service.addFood(dto), HttpStatus.CREATED);
@@ -62,9 +64,43 @@ public class InventoryController {
         return service.getAllSuppliers();
     }
 
+    @GetMapping("/suppliers/{id}")
+    public ResponseEntity<SupplierDTO> getSupplierById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getSupplierById(id));
+    }
+
     @PostMapping("/suppliers")
     public ResponseEntity<SupplierDTO> addSupplier(@Valid @RequestBody SupplierRequestDTO dto) {
         return new ResponseEntity<>(service.addSupplier(dto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/suppliers/{id}")
+    public ResponseEntity<SupplierDTO> updateSupplier(@PathVariable int id,
+                                                      @Valid @RequestBody SupplierRequestDTO dto) {
+        return ResponseEntity.ok(service.updateSupplier(id, dto));
+    }
+
+    // ================= EMPLOYEES =================
+
+    @GetMapping("/employees")
+    public List<EmployeeDTO> getAllEmployees() {
+        return service.getAllEmployees();
+    }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getEmployeeById(id));
+    }
+
+    @PostMapping("/employees")
+    public ResponseEntity<EmployeeDTO> addEmployee(@Valid @RequestBody EmployeeRequestDTO dto) {
+        return new ResponseEntity<>(service.addEmployee(dto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable int id,
+                                                      @Valid @RequestBody EmployeeRequestDTO dto) {
+        return ResponseEntity.ok(service.updateEmployee(id, dto));
     }
 
     // ================= PET RELATIONSHIP QUERIES =================
@@ -77,5 +113,10 @@ public class InventoryController {
     @GetMapping("/pets/{petId}/food")
     public List<PetFoodDTO> getFoodByPet(@PathVariable int petId) {
         return service.getFoodByPet(petId);
+    }
+
+    @GetMapping("/pets/{petId}/employees")
+    public List<EmployeeDTO> getEmployeesByPet(@PathVariable int petId) {
+        return service.getEmployeesByPet(petId);
     }
 }
