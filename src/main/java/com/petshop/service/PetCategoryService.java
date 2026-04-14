@@ -1,6 +1,7 @@
 package com.petshop.service;
 
 import com.petshop.entity.PetCategory;
+import com.petshop.exception.ResourceNotFoundException;
 import com.petshop.repository.PetCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,14 @@ public class PetCategoryService {
 
     public PetCategory getCategoryById(int id) {
         return categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
     }
 
     public PetCategory updateCategory(int id, PetCategory updatedCategory) {
-
         PetCategory existing = categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         existing.setName(updatedCategory.getName());
-
         return categoryRepo.save(existing);
     }
 }
