@@ -1,5 +1,6 @@
 package com.petshop.controller;
 
+import com.petshop.dto.EmployeeDTO;
 import com.petshop.dto.PetFoodDTO;
 import com.petshop.dto.PetFoodRequestDTO;
 import com.petshop.dto.SupplierDTO;
@@ -44,6 +45,12 @@ public class InventoryController {
         return service.getAllFood();
     }
 
+    // GET single food by id
+    @GetMapping("/food/{id}")
+    public ResponseEntity<PetFoodDTO> getFoodById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getFoodById(id));
+    }
+
     @PostMapping("/food")
     public ResponseEntity<PetFoodDTO> addFood(@Valid @RequestBody PetFoodRequestDTO dto) {
         return new ResponseEntity<>(service.addFood(dto), HttpStatus.CREATED);
@@ -62,9 +69,22 @@ public class InventoryController {
         return service.getAllSuppliers();
     }
 
+    // GET single supplier by id
+    @GetMapping("/suppliers/{id}")
+    public ResponseEntity<SupplierDTO> getSupplierById(@PathVariable int id) {
+        return ResponseEntity.ok(service.getSupplierById(id));
+    }
+
     @PostMapping("/suppliers")
     public ResponseEntity<SupplierDTO> addSupplier(@Valid @RequestBody SupplierRequestDTO dto) {
         return new ResponseEntity<>(service.addSupplier(dto), HttpStatus.CREATED);
+    }
+
+    // UPDATE supplier
+    @PutMapping("/suppliers/{id}")
+    public ResponseEntity<SupplierDTO> updateSupplier(@PathVariable int id,
+                                                      @Valid @RequestBody SupplierRequestDTO dto) {
+        return ResponseEntity.ok(service.updateSupplier(id, dto));
     }
 
     // ================= PET RELATIONSHIP QUERIES =================
@@ -77,5 +97,11 @@ public class InventoryController {
     @GetMapping("/pets/{petId}/food")
     public List<PetFoodDTO> getFoodByPet(@PathVariable int petId) {
         return service.getFoodByPet(petId);
+    }
+
+    // GET employees assigned to a pet
+    @GetMapping("/pets/{petId}/employees")
+    public List<EmployeeDTO> getEmployeesByPet(@PathVariable int petId) {
+        return service.getEmployeesByPet(petId);
     }
 }

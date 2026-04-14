@@ -65,7 +65,13 @@ public class InventoryService {
         return foodRepo.findAll().stream().map(this::mapFood).toList();
     }
 
-    // FIX: accepts DTO instead of raw entity
+    // GET single food by id
+    public PetFoodDTO getFoodById(int id) {
+        PetFood food = foodRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+        return mapFood(food);
+    }
+
     public PetFoodDTO addFood(PetFoodRequestDTO dto) {
         PetFood food = new PetFood();
         food.setName(dto.getName());
@@ -76,7 +82,6 @@ public class InventoryService {
         return mapFood(foodRepo.save(food));
     }
 
-    // FIX: accepts DTO instead of raw entity
     public PetFoodDTO updateFood(int id, PetFoodRequestDTO dto) {
         PetFood food = foodRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
@@ -94,9 +99,26 @@ public class InventoryService {
         return supplierRepo.findAll().stream().map(this::mapSupplier).toList();
     }
 
-    // FIX: accepts DTO instead of raw entity
+    // GET single supplier by id
+    public SupplierDTO getSupplierById(int id) {
+        Supplier supplier = supplierRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+        return mapSupplier(supplier);
+    }
+
     public SupplierDTO addSupplier(SupplierRequestDTO dto) {
         Supplier supplier = new Supplier();
+        supplier.setName(dto.getName());
+        supplier.setContactPerson(dto.getContactPerson());
+        supplier.setPhoneNumber(dto.getPhoneNumber());
+        supplier.setEmail(dto.getEmail());
+        return mapSupplier(supplierRepo.save(supplier));
+    }
+
+    // UPDATE supplier
+    public SupplierDTO updateSupplier(int id, SupplierRequestDTO dto) {
+        Supplier supplier = supplierRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
         supplier.setName(dto.getName());
         supplier.setContactPerson(dto.getContactPerson());
         supplier.setPhoneNumber(dto.getPhoneNumber());
@@ -116,6 +138,14 @@ public class InventoryService {
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
         return pet.getFoods().stream().map(this::mapFood).toList();
+    }
+
+    // ================= EMPLOYEE BY PET =================
+
+    public List<EmployeeDTO> getEmployeesByPet(int petId) {
+        Pet pet = petRepo.findById(petId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+        return pet.getEmployees().stream().map(this::mapEmployee).toList();
     }
 
     // ================= MAPPERS =================
