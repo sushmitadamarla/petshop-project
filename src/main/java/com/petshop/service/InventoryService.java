@@ -174,6 +174,12 @@ public class InventoryService {
     }
 
     private EmployeeDTO mapEmployee(Employee e) {
-        return new EmployeeDTO(e.getEmployeeId(), e.getFirstName(), e.getLastName(), e.getPosition());
+        return new EmployeeDTO(
+                e.getEmployeeId(),
+                e.getFirstName(),
+                e.getLastName(),
+                e.getPosition(),
+                e.getPhoneNumber()
+        );
     }
 }
