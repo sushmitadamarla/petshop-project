@@ -2,9 +2,12 @@ package com.petshop.controller;
 
 import com.petshop.dto.PetDTO;
 import com.petshop.dto.PetDetailsDTO;
+import com.petshop.dto.PetRequestDTO;
 import com.petshop.entity.Pet;
 import com.petshop.service.PetService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +20,9 @@ public class PetController {
     private PetService petService;
 
     @PostMapping
-    public Pet addPet(@RequestBody Pet pet) {
-        return petService.addPet(pet);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Pet addPet(@Valid @RequestBody PetRequestDTO dto) {
+        return petService.addPet(dto);
     }
 
     @GetMapping
@@ -37,8 +41,8 @@ public class PetController {
     }
 
     @PutMapping("/{id}")
-    public Pet updatePet(@PathVariable int id, @RequestBody Pet pet) {
-        return petService.updatePet(id, pet);
+    public Pet updatePet(@PathVariable int id, @Valid @RequestBody PetRequestDTO dto) {
+        return petService.updatePet(id, dto);
     }
 
     @GetMapping("/{id}/details")
