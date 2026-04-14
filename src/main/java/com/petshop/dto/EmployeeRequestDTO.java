@@ -1,25 +1,24 @@
 package com.petshop.dto;
 
-public class EmployeeDTO {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
-    private int employeeId;
+public class EmployeeRequestDTO {
+
+    @NotBlank(message = "First name is required")
     private String firstName;
+
+    @NotBlank(message = "Last name is required")
     private String lastName;
+
+    @NotBlank(message = "Position is required")
     private String position;
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^\\+?[0-9.]{10,15}$", message = "Invalid phone number format")
     private String phoneNumber;
 
-    public EmployeeDTO() {}
-
-    public EmployeeDTO(int employeeId, String firstName, String lastName, String position, String phoneNumber) {
-        this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getEmployeeId() { return employeeId; }
-    public void setEmployeeId(int employeeId) { this.employeeId = employeeId; }
+    public EmployeeRequestDTO() {}
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
