@@ -16,33 +16,20 @@ public class TransactionRequestDTO {
 
     @NotNull(message = "Amount is required")
     @Min(value = 1, message = "Amount must be greater than 0")
-    private Double amount;
+    private Double totalAmount;
 
-    public TransactionRequestDTO() {} // ✅ ADD
+    public TransactionRequestDTO() {}
 
-    // getters & setters
+    public Integer getCustomerId() { return customerId; }
+    public void setCustomerId(Integer customerId) { this.customerId = customerId; }
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
+    public Integer getPetId() { return petId; }
+    public void setPetId(Integer petId) { this.petId = petId; }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
+    // FIX: getter and setter must match field name "totalAmount"
+    public Double getTotalAmount() { return totalAmount; }
+    public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
 
-    public Integer getPetId() {
-        return petId;
-    }
-
-    public void setPetId(Integer petId) {
-        this.petId = petId;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    // alias for service — so TransactionService.getAmount() still works
+    public Double getAmount() { return totalAmount; }
 }

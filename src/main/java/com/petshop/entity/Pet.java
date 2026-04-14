@@ -1,7 +1,8 @@
 package com.petshop.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -25,52 +26,45 @@ public class Pet {
     @JoinColumn(name = "category_id")
     private PetCategory category;
 
-    // ✅ Grooming
     @ManyToMany
     @JoinTable(
             name = "pet_grooming_relationship",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
-    private List<GroomingService> groomingServices;
+    private Set<GroomingService> groomingServices = new HashSet<>();
 
-    // ✅ Vaccination
     @ManyToMany
     @JoinTable(
             name = "pet_vaccination_relationship",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "vaccination_id")
     )
-    private List<Vaccination> vaccinations;
+    private Set<Vaccination> vaccinations = new HashSet<>();
 
-    // ✅ Employee
     @ManyToMany
     @JoinTable(
             name = "employee_pet_relationship",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
-    private List<Employee> employees;
+    private Set<Employee> employees = new HashSet<>();
 
-    // ✅ Food
     @ManyToMany
     @JoinTable(
             name = "pet_food_relationship",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "food_id")
     )
-    private List<PetFood> foods;
+    private Set<PetFood> foods = new HashSet<>();
 
-    // ✅ Supplier
     @ManyToMany
     @JoinTable(
             name = "pet_supplier_relationship",
             joinColumns = @JoinColumn(name = "pet_id"),
             inverseJoinColumns = @JoinColumn(name = "supplier_id")
     )
-    private List<Supplier> suppliers;
-
-    // ===== Getters & Setters =====
+    private Set<Supplier> suppliers = new HashSet<>();
 
     public int getPetId() { return petId; }
     public void setPetId(int petId) { this.petId = petId; }
@@ -96,18 +90,18 @@ public class Pet {
     public PetCategory getCategory() { return category; }
     public void setCategory(PetCategory category) { this.category = category; }
 
-    public List<GroomingService> getGroomingServices() { return groomingServices; }
-    public void setGroomingServices(List<GroomingService> groomingServices) { this.groomingServices = groomingServices; }
+    public Set<GroomingService> getGroomingServices() { return groomingServices; }
+    public void setGroomingServices(Set<GroomingService> groomingServices) { this.groomingServices = groomingServices; }
 
-    public List<Vaccination> getVaccinations() { return vaccinations; }
-    public void setVaccinations(List<Vaccination> vaccinations) { this.vaccinations = vaccinations; }
+    public Set<Vaccination> getVaccinations() { return vaccinations; }
+    public void setVaccinations(Set<Vaccination> vaccinations) { this.vaccinations = vaccinations; }
 
-    public List<Employee> getEmployees() { return employees; }
-    public void setEmployees(List<Employee> employees) { this.employees = employees; }
+    public Set<Employee> getEmployees() { return employees; }
+    public void setEmployees(Set<Employee> employees) { this.employees = employees; }
 
-    public List<PetFood> getFoods() { return foods; }
-    public void setFoods(List<PetFood> foods) { this.foods = foods; }
+    public Set<PetFood> getFoods() { return foods; }
+    public void setFoods(Set<PetFood> foods) { this.foods = foods; }
 
-    public List<Supplier> getSuppliers() { return suppliers; }
-    public void setSuppliers(List<Supplier> suppliers) { this.suppliers = suppliers; }
+    public Set<Supplier> getSuppliers() { return suppliers; }
+    public void setSuppliers(Set<Supplier> suppliers) { this.suppliers = suppliers; }
 }

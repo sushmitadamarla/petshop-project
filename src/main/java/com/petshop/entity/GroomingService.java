@@ -1,7 +1,9 @@
 package com.petshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "grooming_services")
@@ -25,54 +27,24 @@ public class GroomingService {
     private boolean available = true;
 
     @ManyToMany(mappedBy = "groomingServices")
-    private List<Pet> pets;
+    @JsonIgnore
+    private Set<Pet> pets = new HashSet<>();
 
-    // ================= GETTERS & SETTERS =================
+    public int getServiceId() { return serviceId; }
+    public void setServiceId(int serviceId) { this.serviceId = serviceId; }
 
-    public int getServiceId() {
-        return serviceId;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
 
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
+    public Set<Pet> getPets() { return pets; }
+    public void setPets(Set<Pet> pets) { this.pets = pets; }
 }

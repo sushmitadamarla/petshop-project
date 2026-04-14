@@ -1,7 +1,9 @@
 package com.petshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "vaccinations")
@@ -25,9 +27,9 @@ public class Vaccination {
     private boolean available = true;
 
     @ManyToMany(mappedBy = "vaccinations")
-    private List<Pet> pets;
+    @JsonIgnore
+    private Set<Pet> pets = new HashSet<>();
 
-    // ================= GETTERS & SETTERS =================
 
     public int getVaccinationId() {
         return vaccinationId;
@@ -69,10 +71,11 @@ public class Vaccination {
         this.available = available;
     }
 
-    public List<Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public List<Pet> getPets() { return pets; }
-    public void setPets(List<Pet> pets) { this.pets = pets; }
+    public void setPets(Set<Pet> pets) {
+        this.pets = pets;
+    }
 }

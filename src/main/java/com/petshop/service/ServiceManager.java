@@ -12,7 +12,6 @@ import com.petshop.repository.VaccinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,7 +34,6 @@ public class ServiceManager {
         g.setDescription(dto.getDescription());
         g.setPrice(dto.getPrice());
         g.setAvailable(dto.isAvailable());
-
         return mapGrooming(groomingRepo.save(g));
     }
 
@@ -45,7 +43,6 @@ public class ServiceManager {
         v.setDescription(dto.getDescription());
         v.setPrice(dto.getPrice());
         v.setAvailable(dto.isAvailable());
-
         return mapVaccination(vaccinationRepo.save(v));
     }
 
@@ -58,49 +55,54 @@ public class ServiceManager {
         GroomingService g = groomingRepo.findById(serviceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Grooming service not found"));
 
-        if (pet.getGroomingServices() == null) {
-            pet.setGroomingServices(new ArrayList<>());
+        // duplicate check — Set.add() returns false if already present
+        boolean added = pet.getGroomingServices().add(g);
+        if (!added) {
+            throw new IllegalStateException("Grooming service already assigned to this pet");
         }
 
-        pet.getGroomingServices().add(g);
         petRepo.save(pet);
         return "Grooming assigned";
     }
 
     public String assignVaccination(int petId, int vaccinationId) {
+
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-        Vaccination v = vaccinationRepo.findById(vaccinationId)
+        Vaccination vaccination = vaccinationRepo.findById(vaccinationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
 
-        if (pet.getVaccinations() == null) {
-            pet.setVaccinations(new ArrayList<>());
+        // 🔥 CRITICAL FIX: prevent duplicate DB insert
+        boolean alreadyAssigned = pet.getVaccinations()
+                .stream()
+                .anyMatch(v -> v.getVaccinationId() == vaccinationId);
+
+        if (alreadyAssigned) {
+            return "Vaccination already assigned to this pet";
         }
 
-        pet.getVaccinations().add(v);
+        pet.getVaccinations().add(vaccination);
         petRepo.save(pet);
-        return "Vaccination assigned";
+
+        return "Vaccination assigned successfully";
     }
 
     // ================= DTO MAPPERS =================
 
-    // BUG FIX: was calling g.getServiceName() → correct is g.getName()
-    // BUG FIX: was passing only 3 args → now passing all 5
     private GroomingServiceDTO mapGrooming(GroomingService g) {
         return new GroomingServiceDTO(
-                g.getServiceId(),      // FIX: was g.getId()
-                g.getName(),           // FIX: was g.getServiceName()
+                g.getServiceId(),
+                g.getName(),
                 g.getDescription(),
                 g.getPrice(),
                 g.isAvailable()
         );
     }
 
-    // BUG FIX: was calling v.getId() → correct is v.getVaccinationId()
     private VaccinationDTO mapVaccination(Vaccination v) {
         return new VaccinationDTO(
-                v.getVaccinationId(),  // FIX: was v.getId()
+                v.getVaccinationId(),
                 v.getName(),
                 v.getDescription(),
                 v.getPrice(),
