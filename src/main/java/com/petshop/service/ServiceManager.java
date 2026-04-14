@@ -29,35 +29,28 @@ public class ServiceManager {
     // ================= ADD SERVICES =================
 
     public GroomingServiceDTO addGrooming(GroomingServiceDTO dto) {
-
         GroomingService g = new GroomingService();
         g.setName(dto.getName());
         g.setDescription(dto.getDescription());
         g.setPrice(dto.getPrice());
         g.setAvailable(dto.isAvailable());
 
-        GroomingService saved = groomingRepo.save(g);
-
-        return mapGrooming(saved);
+        return mapGrooming(groomingRepo.save(g));
     }
 
     public VaccinationDTO addVaccination(VaccinationDTO dto) {
-
         Vaccination v = new Vaccination();
         v.setName(dto.getName());
         v.setDescription(dto.getDescription());
         v.setPrice(dto.getPrice());
         v.setAvailable(dto.isAvailable());
 
-        Vaccination saved = vaccinationRepo.save(v);
-
-        return mapVaccination(saved);
+        return mapVaccination(vaccinationRepo.save(v));
     }
 
     // ================= ASSIGN SERVICES =================
 
     public String assignGrooming(int petId, int serviceId) {
-
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
@@ -66,12 +59,10 @@ public class ServiceManager {
 
         pet.getGroomingServices().add(g);
         petRepo.save(pet);
-
         return "Grooming assigned";
     }
 
     public String assignVaccination(int petId, int vaccinationId) {
-
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
@@ -80,23 +71,27 @@ public class ServiceManager {
 
         pet.getVaccinations().add(v);
         petRepo.save(pet);
-
         return "Vaccination assigned";
     }
 
     // ================= DTO MAPPERS =================
 
+    // BUG FIX: was calling g.getServiceName() → correct is g.getName()
+    // BUG FIX: was passing only 3 args → now passing all 5
     private GroomingServiceDTO mapGrooming(GroomingService g) {
         return new GroomingServiceDTO(
-                g.getId(),
-                g.getServiceName(),
-                g.getPrice()
+                g.getServiceId(),      // FIX: was g.getId()
+                g.getName(),           // FIX: was g.getServiceName()
+                g.getDescription(),
+                g.getPrice(),
+                g.isAvailable()
         );
     }
 
+    // BUG FIX: was calling v.getId() → correct is v.getVaccinationId()
     private VaccinationDTO mapVaccination(Vaccination v) {
         return new VaccinationDTO(
-                v.getId(),
+                v.getVaccinationId(),  // FIX: was v.getId()
                 v.getName(),
                 v.getDescription(),
                 v.getPrice(),
@@ -107,40 +102,24 @@ public class ServiceManager {
     // ================= GET ALL SERVICES =================
 
     public List<GroomingServiceDTO> getAllGrooming() {
-        return groomingRepo.findAll()
-                .stream()
-                .map(this::mapGrooming)
-                .toList();
+        return groomingRepo.findAll().stream().map(this::mapGrooming).toList();
     }
 
     public List<VaccinationDTO> getAllVaccination() {
-        return vaccinationRepo.findAll()
-                .stream()
-                .map(this::mapVaccination)
-                .toList();
+        return vaccinationRepo.findAll().stream().map(this::mapVaccination).toList();
     }
 
     // ================= PET HISTORY =================
 
     public List<GroomingServiceDTO> getPetGroomingHistory(int petId) {
-
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
-
-        return pet.getGroomingServices()
-                .stream()
-                .map(this::mapGrooming)
-                .toList();
+        return pet.getGroomingServices().stream().map(this::mapGrooming).toList();
     }
 
     public List<VaccinationDTO> getPetVaccinationHistory(int petId) {
-
         Pet pet = petRepo.findById(petId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
-
-        return pet.getVaccinations()
-                .stream()
-                .map(this::mapVaccination)
-                .toList();
+        return pet.getVaccinations().stream().map(this::mapVaccination).toList();
     }
 }

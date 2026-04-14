@@ -2,9 +2,8 @@ package com.petshop.controller;
 
 import com.petshop.dto.GroomingServiceDTO;
 import com.petshop.dto.VaccinationDTO;
-import com.petshop.entity.GroomingService;
-import com.petshop.entity.Vaccination;
 import com.petshop.service.ServiceManager;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,32 +21,24 @@ public class ServiceController {
     // ================= ADD SERVICES =================
 
     @PostMapping("/grooming")
-    public ResponseEntity<GroomingServiceDTO> addGrooming(@RequestBody GroomingServiceDTO dto) {
-        return new ResponseEntity<>(
-                serviceManager.addGrooming(dto),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity<GroomingServiceDTO> addGrooming(@Valid @RequestBody GroomingServiceDTO dto) {
+        return new ResponseEntity<>(serviceManager.addGrooming(dto), HttpStatus.CREATED);
     }
 
     @PostMapping("/vaccinations")
-    public ResponseEntity<VaccinationDTO> addVaccination(@RequestBody VaccinationDTO dto) {
-        return new ResponseEntity<>(
-                serviceManager.addVaccination(dto),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity<VaccinationDTO> addVaccination(@Valid @RequestBody VaccinationDTO dto) {
+        return new ResponseEntity<>(serviceManager.addVaccination(dto), HttpStatus.CREATED);
     }
 
     // ================= ASSIGN SERVICES =================
 
     @PostMapping("/pets/{petId}/grooming/{serviceId}")
-    public String assignGrooming(@PathVariable int petId,
-                                 @PathVariable int serviceId) {
+    public String assignGrooming(@PathVariable int petId, @PathVariable int serviceId) {
         return serviceManager.assignGrooming(petId, serviceId);
     }
 
     @PostMapping("/pets/{petId}/vaccinations/{vaccinationId}")
-    public String assignVaccination(@PathVariable int petId,
-                                    @PathVariable int vaccinationId) {
+    public String assignVaccination(@PathVariable int petId, @PathVariable int vaccinationId) {
         return serviceManager.assignVaccination(petId, vaccinationId);
     }
 
