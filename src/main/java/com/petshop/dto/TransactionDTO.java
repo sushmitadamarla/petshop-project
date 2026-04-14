@@ -4,33 +4,60 @@ import java.time.LocalDate;
 
 public class TransactionDTO {
 
-    private int id;
+    private int transactionId;
     private int customerId;
+    private String customerName;
     private int petId;
+    private String petName;
     private LocalDate transactionDate;
     private double amount;
     private String status;
 
-     // Default constructor
-    public TransactionDTO() {
-    	
-    }
+    public TransactionDTO() {}
 
-    public TransactionDTO(int id, int customerId, int petId,
+    public TransactionDTO(int transactionId, int customerId, String customerName,
+                          int petId, String petName,
                           LocalDate transactionDate, double amount, String status) {
-        this.id = id;
+        this.transactionId = transactionId;
         this.customerId = customerId;
+        this.customerName = customerName;
         this.petId = petId;
+        this.petName = petName;
         this.transactionDate = transactionDate;
         this.amount = amount;
         this.status = status;
     }
 
-    // getters
-    public int getId() { return id; }
-    public int getCustomerId() { return customerId; }
-    public int getPetId() { return petId; }
-    public LocalDate getTransactionDate() { return transactionDate; }
-    public double getAmount() { return amount; }
-    public String getStatus() { return status; }
+
+    public int getTransactionId() {
+        return transactionId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public LocalDate getTransactionDate() {
+        return transactionDate;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }
