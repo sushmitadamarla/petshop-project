@@ -1,10 +1,11 @@
 package com.petshop.controller;
 
 import com.petshop.dto.PetFoodDTO;
+import com.petshop.dto.PetFoodRequestDTO;
 import com.petshop.dto.SupplierDTO;
-import com.petshop.entity.PetFood;
-import com.petshop.entity.Supplier;
+import com.petshop.dto.SupplierRequestDTO;
 import com.petshop.service.InventoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class InventoryController {
     @Autowired
     private InventoryService service;
 
+    // ================= ASSIGN =================
 
     @PostMapping("/pets/{petId}/employees/{employeeId}")
     public String assignEmployee(@PathVariable int petId, @PathVariable int employeeId) {
@@ -35,21 +37,25 @@ public class InventoryController {
         return service.assignSupplier(petId, supplierId);
     }
 
+    // ================= FOOD =================
+
     @GetMapping("/food")
     public List<PetFoodDTO> getAllFood() {
         return service.getAllFood();
     }
 
     @PostMapping("/food")
-    public ResponseEntity<PetFoodDTO> addFood(@RequestBody PetFood food) {
-        return new ResponseEntity<>(service.addFood(food), HttpStatus.CREATED);
+    public ResponseEntity<PetFoodDTO> addFood(@Valid @RequestBody PetFoodRequestDTO dto) {
+        return new ResponseEntity<>(service.addFood(dto), HttpStatus.CREATED);
     }
 
     @PutMapping("/food/{id}")
-    public ResponseEntity<PetFoodDTO> updateFood(@PathVariable int id, @RequestBody PetFood food) {
-        return ResponseEntity.ok(service.updateFood(id, food));
+    public ResponseEntity<PetFoodDTO> updateFood(@PathVariable int id,
+                                                 @Valid @RequestBody PetFoodRequestDTO dto) {
+        return ResponseEntity.ok(service.updateFood(id, dto));
     }
 
+    // ================= SUPPLIERS =================
 
     @GetMapping("/suppliers")
     public List<SupplierDTO> getAllSuppliers() {
@@ -57,8 +63,8 @@ public class InventoryController {
     }
 
     @PostMapping("/suppliers")
-    public ResponseEntity<SupplierDTO> addSupplier(@RequestBody Supplier supplier) {
-        return new ResponseEntity<>(service.addSupplier(supplier), HttpStatus.CREATED);
+    public ResponseEntity<SupplierDTO> addSupplier(@Valid @RequestBody SupplierRequestDTO dto) {
+        return new ResponseEntity<>(service.addSupplier(dto), HttpStatus.CREATED);
     }
 
     // ================= PET RELATIONSHIP QUERIES =================
