@@ -210,4 +210,46 @@ class CustomerServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Address not found");
     }
+
+    @Test
+    void registerCustomer_emailAlreadyExists() {
+        when(customerRepo.findByEmail("john@test.com"))
+                .thenReturn(Optional.of(customer));
+
+        assertThatThrownBy(() -> service.registerCustomer(dto))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void getAddress_customerNotFound() {
+        when(customerRepo.findById(1)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.getAddress(1))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Customer not found");
+    }
+
+    @Test
+    void addAddress_customerNotFound() {
+        when(customerRepo.findById(1)).thenReturn(Optional.empty());
+
+        Address newAddress = new Address();
+
+        assertThatThrownBy(() -> service.addAddress(1, newAddress))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Customer not found");
+    }
+
+    @Test
+    void updateAddress_partialUpdate() {
+        when(addressRepo.findById(1)).thenReturn(Optional.of(address));
+        when(addressRepo.save(any(Address.class))).thenReturn(address);
+
+        Address updated = new Address();
+        updated.setCity("Chennai");
+
+        Address result = service.updateAddress(1, updated);
+
+        assertThat(result.getCity()).isEqualTo("Chennai");
+    }
 }
