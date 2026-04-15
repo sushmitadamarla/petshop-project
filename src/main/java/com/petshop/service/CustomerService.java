@@ -34,6 +34,9 @@ public class CustomerService {
 
     // ================= REGISTER =================
     public CustomerDTO registerCustomer(CustomerDTO dto) {
+        if (customerRepo.findByEmail(dto.getEmail()).isPresent()) {
+            throw new IllegalStateException("Customer already exists");
+        }
 
         Address address = new Address();
         address.setStreet(dto.getStreet());
