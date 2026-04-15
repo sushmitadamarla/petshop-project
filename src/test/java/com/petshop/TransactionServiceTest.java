@@ -61,7 +61,6 @@ class TransactionServiceTest {
         transaction.setStatus(Transaction.Status.Success);
     }
 
-    // add place order
     // ================= PLACE ORDER =================
 
     @Test
@@ -97,6 +96,8 @@ class TransactionServiceTest {
                 () -> service.placeOrder(req));
     }
 
+
+    // add placeOrder_petNotFound
     @Test
     void placeOrder_petNotFound() {
         TransactionRequestDTO req = new TransactionRequestDTO();
