@@ -224,4 +224,20 @@ class TransactionServiceTest {
         assertThrows(ResourceNotFoundException.class,
                 () -> service.updateStatus(1, dto));
     }
+
+    @Test
+    void getTransaction_notFound() {
+        when(transactionRepo.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> service.getTransaction(1));
+    }
+
+    @Test
+    void getTransactionsByCustomer_customerNotFound() {
+        when(customerRepo.existsById(1)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> service.getTransactionsByCustomer(1));
+    }
 }
