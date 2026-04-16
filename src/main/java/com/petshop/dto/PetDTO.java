@@ -23,4 +23,24 @@ public class PetDTO {
     public String getBreed() { return breed; }
     public int getAge() { return age; }
     public double getPrice() { return price; }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
